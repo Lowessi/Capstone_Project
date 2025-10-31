@@ -1,4 +1,4 @@
-import UserProfile from "../models/profileModel.js";
-import User from "../models/userModel";
+import UserProfile from "../models/ProfileMode.js";
+import User from "../models/UserModel.js";
 
 //Create or update user profile

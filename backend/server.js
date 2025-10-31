@@ -11,8 +11,8 @@ app.use(cors());
 app.use(express.json());
 
 //routes
-import userRoutes from "./routes/userRoutes.js";
-app.use("/api/users", userRoutes);
+import UserRoute from "./routes/UserRoute.js";
+app.use("/api/users", UserRoute);
 
 app.use("/api/posts", (req, res) => {
   res.send("Posts route is under construction.");
@@ -30,5 +30,5 @@ app.get("/", (req, res) => {
 });
 
 // MongoDB connection
-import connectDB from "./configDB.js";
+import connectDB from "./ConfigDb.js";
 connectDB();
