@@ -36,11 +36,12 @@ const Signup = () => {
       );
       setSuccess("Signup successful! You can now login.");
       console.log(res.data);
-
+      console.log("naay guba");
       window.location.href = "/";
     } catch (err) {
       if (err.response && err.response.data && err.response.data.message) {
         setError(err.response.data.message); // backend error
+        console.log("naay guba");
       } else {
         setError("Something went wrong. Please try again.");
       }

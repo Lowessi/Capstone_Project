@@ -45,6 +45,7 @@ const Signin = () => {
         <input
           type="text"
           required
+          name="username"
           value={username}
           onChange={handleChange}
           className="border rounded-[5px] p-[.5rem] w-full"
@@ -57,6 +58,7 @@ const Signin = () => {
         <input
           type="password"
           required
+          name="password"
           value={password}
           onChange={handleChange}
           className="border rounded-[5px] p-[0.5rem]  w-full"
@@ -78,7 +80,7 @@ const Signin = () => {
       <p className="text-center w-full text-sm border-t pt-[.5rem]">
         Don’t have an account?{" "}
         <a
-          href="/register"
+          href="/signup"
           className="text-blue-600 no-underline text-[#ff0000] hover:underline"
         >
           Register

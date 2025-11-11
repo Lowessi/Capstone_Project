@@ -31,7 +31,7 @@ const signupUser = async (req, res) => {
     res.status(201).json({
       message: "User registered successfully",
       user: {
-        id: newUser.id,
+        _id: newUser.id,
         username: newUser.username,
         email: newUser.email,
         role: newUser.role,
@@ -59,7 +59,7 @@ const signinUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid username or password" });
     }
     //generate token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
     res.status(200).json({ token });
@@ -68,4 +68,60 @@ const signinUser = async (req, res) => {
   }
 };
 
-export { signupUser, signinUser };
+//create updtate profile
+
+// Create or Update user profile
+const createProfile = async (req, res) => {
+  try {
+    // Get the user ID from the verified JWT token (middleware adds this)
+    const userId = req.user._id;
+
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized: No user found" });
+    }
+
+    // Destructure profile fields from request body
+    const { firstname, lastname, email, age, address } = req.body;
+
+    // Update or create user profile
+    const updatedProfile = await User.findByIdAndUpdate(
+      userId, // find by _id
+      { firstname, lastname, email, age, address }, // update data
+      { new: true } // return the updated document
+    );
+
+    // If user is not found
+    if (!updatedProfile) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Success response
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user: updatedProfile,
+    });
+  } catch (error) {
+    console.error("Profile update error:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+//get profile
+
+const getUserProfile = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ user });
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+//find profile
+
+export { signupUser, signinUser, createProfile, getUserProfile };

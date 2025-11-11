@@ -1,4 +1,12 @@
+import { href, useNavigate } from "react-router-dom";
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   return (
     <div>
       <nav className="border-b p-[1rem] flex justify-between items-center">
@@ -16,7 +24,10 @@ const Navbar = () => {
           <li>
             <a href="">Project</a>
           </li>
-          <div>user Profile</div>
+          <div className="flex gap-[1rem]">
+            <a href="/profile">user Profile</a>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
         </ul>
       </nav>
     </div>
