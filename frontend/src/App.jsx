@@ -5,6 +5,8 @@ import Dashboard from "./pages/Dashboard";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import ProfilePage from "./pages/ProfilePage";
+import Public from "./components/Public";
+import Protected from "./components/Protected";
 
 const App = () => {
   const token = localStorage.getItem("token");
@@ -19,10 +21,40 @@ const App = () => {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Signin />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/"
+            element={
+              <Public>
+                <Signin />
+              </Public>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <Public>
+                {" "}
+                <Signup />
+              </Public>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <Protected>
+                <ProfilePage />
+              </Protected>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <Protected>
+                {" "}
+                <Dashboard />
+              </Protected>
+            }
+          />
           {/* <Route path="/" element={<Navbar />} /> */}
         </Routes>
       </BrowserRouter>

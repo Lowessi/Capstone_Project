@@ -7,6 +7,8 @@ const ProfilePage = () => {
     lastname: "",
     age: "",
     address: "",
+    role: "",
+    email: "",
   });
 
   const [loading, setLoading] = useState(true);
@@ -29,6 +31,8 @@ const ProfilePage = () => {
             firstname: res.data.user.firstname || "",
             lastname: res.data.user.lastname || "",
             age: res.data.user.age || "",
+            role: res.data.user.role || "",
+            email: res.data.user.email || "",
             address: res.data.user.address || "",
           });
         }
@@ -120,6 +124,25 @@ const ProfilePage = () => {
           type="text"
           name="address"
           value={formData.address}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="flex flex-col">
+        <label>Role</label>
+        <input
+          type="text"
+          name="role"
+          value={formData.role}
+          onChange={handleChange}
+          readOnly
+        />
+      </div>
+      <div className="flex flex-col">
+        <label>Email</label>
+        <input
+          type="text"
+          name="email"
+          value={formData.email}
           onChange={handleChange}
         />
       </div>

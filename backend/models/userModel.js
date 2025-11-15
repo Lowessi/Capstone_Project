@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    enum: ["male", "female"],
+    enum: ["Male", "Female"],
     required: true,
   },
 
@@ -37,6 +37,11 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
 
+  Role: {
+    type: String,
+    enum: ["Admin", "Chairman", "Secretary", "Treasurer"],
+    require: true,
+  },
   civil: {
     type: String,
     enum: ["married", "unmarried"],

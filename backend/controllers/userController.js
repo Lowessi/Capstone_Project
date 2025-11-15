@@ -68,34 +68,32 @@ const signinUser = async (req, res) => {
   }
 };
 
-//create updtate profile
-
-// Create or Update user profile
+// create or update  user profile
 const createProfile = async (req, res) => {
   try {
-    // Get the user ID from the verified JWT token (middleware adds this)
+    // get the user ID from the verified JWT token (middleware adds this)
     const userId = req.user._id;
 
     if (!userId) {
       return res.status(401).json({ message: "Unauthorized: No user found" });
     }
 
-    // Destructure profile fields from request body
-    const { firstname, lastname, email, age, address } = req.body;
+    // destructure profile fields from request body
+    const { firstname, lastname, email, role, age, address } = req.body;
 
-    // Update or create user profile
+    // update or create user profile
     const updatedProfile = await User.findByIdAndUpdate(
       userId, // find by _id
-      { firstname, lastname, email, age, address }, // update data
+      { firstname, lastname, role, email, age, address }, // update data
       { new: true } // return the updated document
     );
 
-    // If user is not found
+    // if user is not found
     if (!updatedProfile) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Success response
+    // success response
     res.status(200).json({
       message: "Profile updated successfully",
       user: updatedProfile,
@@ -107,7 +105,6 @@ const createProfile = async (req, res) => {
 };
 
 //get profile
-
 const getUserProfile = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -122,6 +119,37 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-//find profile
+//find other profile
+const getProfileById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ user });
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
 
-export { signupUser, signinUser, createProfile, getUserProfile };
+//get all profile
+const getAllProfile = async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.status(200).json({ users });
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+export {
+  signupUser,
+  signinUser,
+  createProfile,
+  getUserProfile,
+  getProfileById,
+  getAllProfile,
+};
